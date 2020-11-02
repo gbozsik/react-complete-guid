@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Person from './Person/Person';
 import App2 from './App2'
+import Radium, { StyleRoot } from 'radium';
 
 const app = props => {
   const [personsState, setPersonsState] = useState({
@@ -54,7 +55,7 @@ const app = props => {
     const mutatablePersonArray = [...personsState.persons]
     mutatablePersonArray[personIndex] = personForMutation;
 
-    setPersonsState({persons: mutatablePersonArray});
+    setPersonsState({ persons: mutatablePersonArray });
   }
 
   const togglePersonHandler = () => {
@@ -85,27 +86,26 @@ const app = props => {
 
 
   return (
-    <div className="App">
-      <h1>App</h1>
-      <button style={style} onClick={togglePersonHandler} >Toggle persons</button>
-      <button style={style} onClick={() => switchNameHandler('ammamamamam')} >Switch name</button>
-      {showPersonState.showPerson ? <div>
-        {personsState.persons.map((person, index) => {
-          return <Person
-            kex={person.id}
-            click={deletePersonhandler.bind(this, index)}
-            changedName={nameChangeHandler.bind(this, person.id)}
-            name={person.name}
-            age={person.age}
-          />
-        })
-        })
-
-        <App2 />
-      </div> : null}
-    </div>
+    <StyleRoot>
+      <div className="App">
+        <h1>App</h1>
+        <button style={style} onClick={togglePersonHandler} >Toggle persons</button>
+        <button style={style} onClick={() => switchNameHandler('ammamamamam')} >Switch name</button>
+        {showPersonState.showPerson ? <div>
+          {personsState.persons.map((person, index) => {
+            return <Person
+              kex={person.id}
+              click={deletePersonhandler.bind(this, index)}
+              changedName={nameChangeHandler.bind(this, person.id)}
+              name={person.name}
+              age={person.age}/>
+          })}
+          <App2 />
+        </div> : null}
+      </div>
+    </StyleRoot>
     // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
   );
 }
 
-export default app;
+export default Radium(app);

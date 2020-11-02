@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import Radium from 'radium'
 
 class App2 extends Component {
     state = {
@@ -9,31 +10,7 @@ class App2 extends Component {
             { id: 'ytdkjg', name: 'name2', age: 24 },
             { id: '4ert', name: 'name3', age: 34 }
         ],
-        otherStates: [
-            { title: 'some other value' },
-            { title: 'some other value 2' }
-        ],
         showPerson: false
-    }
-
-    switchOtherStateHandler = () => {
-        this.setState({
-            otherStates: [
-                { title: 'other state changed' },
-                { title: 'some other value 2 changed' }
-            ]
-        });
-    }
-
-    switchNameHandler = (newName) => {
-        this.setState({
-            persons: [
-                { name: newName, age: 23 },
-                { name: 'name2777', age: 24 },
-                { name: 'name3666', age: 64 }
-            ],
-        },
-        );
     }
 
     // nameChangeHandler = (id, event) => { //this version if you call it with arrow function
@@ -73,7 +50,11 @@ class App2 extends Component {
             border: '1px solid blue',
             padding: '8px',
             cursor: 'pointer',
-            margin: '10px'
+            margin: '10px',
+            ':hover': {
+                backgroundColor: 'lightgreen',
+                color: 'black'
+            }
         };
 
         let persons = null;
@@ -93,6 +74,10 @@ class App2 extends Component {
                 </div>
             );
             style.backgroundColor = 'red';
+            style[":hover"] = {
+                    backgroundColor: 'lightgreen',
+                    color: 'black'
+            }
         }
 
         // let classes = ['red', 'bold'].join(' ');
@@ -109,7 +94,7 @@ class App2 extends Component {
                 <h1>App 2</h1>
                 <p className={classes.join(' ')}>This is a paragraph</p>
                 <button style={style} onClick={this.togglePersonHandler} >Toggle persons</button>
-                <button style={style} onClick={() => this.switchNameHandler('MMMaamama App 2')} >Switch name</button>
+                {/* <button style={style} onClick={() => this.switchNameHandler('MMMaamama App 2')} >Switch name</button> */}
                 {persons}
             </div>
             // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
@@ -117,4 +102,4 @@ class App2 extends Component {
     }
 }
 
-export default App2;
+export default Radium(App2);
