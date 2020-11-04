@@ -14,8 +14,8 @@ const app = props => {
 
   const [otherState, setOtherState] = useState({
     otherStates: [
-      { title: 'some other value' },
-      { title: 'some other value 2' }
+      { id: 'idlkj', title: 'some other value' },
+      { id: 'idf', title: 'some other value 2' }
     ]
   });
 
@@ -26,8 +26,8 @@ const app = props => {
   const switchOtherStateHandler = () => {
     setOtherState({
       otherStates: [
-        { title: 'other state changed' },
-        { title: 'some other value 2 changed' }
+        { id: 'idds', title: 'other state changed' },
+        { id: 'idnh', title: 'some other value 2 changed' }
       ]
     });
   }
@@ -35,9 +35,9 @@ const app = props => {
   const switchNameHandler = (newName) => {
     setPersonsState({
       persons: [
-        { name: newName, age: 23 },
-        { name: 'name2777', age: 24 },
-        { name: 'name3666', age: 64 }
+        { id: 'idkjh', name: newName, age: 23 },
+        { id: 'idlkjh', name: 'name2777', age: 24 },
+        { id: 'idytr', name: 'name3666', age: 64 }
       ],
     },
       switchOtherStateHandler()
@@ -98,8 +98,7 @@ const app = props => {
             name={person.name}
             age={person.age}
           />
-        })
-        })
+        })}
 
         <App2 />
       </div> : null}
