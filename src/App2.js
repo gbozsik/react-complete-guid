@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+// import './App.css';
+import classes from './App.css'
 import Person from './Person/Person';
 
 class App2 extends Component {
@@ -9,31 +10,7 @@ class App2 extends Component {
             { id: 'ytdkjg', name: 'name2', age: 24 },
             { id: '4ert', name: 'name3', age: 34 }
         ],
-        otherStates: [
-            { title: 'some other value' },
-            { title: 'some other value 2' }
-        ],
         showPerson: false
-    }
-
-    switchOtherStateHandler = () => {
-        this.setState({
-            otherStates: [
-                { title: 'other state changed' },
-                { title: 'some other value 2 changed' }
-            ]
-        });
-    }
-
-    switchNameHandler = (newName) => {
-        this.setState({
-            persons: [
-                { name: newName, age: 23 },
-                { name: 'name2777', age: 24 },
-                { name: 'name3666', age: 64 }
-            ],
-        },
-        );
     }
 
     // nameChangeHandler = (id, event) => { //this version if you call it with arrow function
@@ -66,15 +43,7 @@ class App2 extends Component {
     }
 
     render() {
-        const style = {
-            backgroundColor: 'green',
-            color: 'white',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer',
-            margin: '10px'
-        };
+       let btnClasses = '';
 
         let persons = null;
 
@@ -92,24 +61,24 @@ class App2 extends Component {
                     })}
                 </div>
             );
-            style.backgroundColor = 'red';
+            // btnClasses.push(classes.Red)
+            btnClasses = classes.Red;
         }
 
         // let classes = ['red', 'bold'].join(' ');
-        const classes = [];
+        const assignedClasses = [];
         if (this.state.persons.length <= 2) {
-            classes.push('red');
+            assignedClasses.push(classes.red);
         }
         if (this.state.persons.length <= 1) {
-            classes.push('bold')
+            assignedClasses.push(classes.bold)
         }
 
         return (
-            <div className="App">
+            <div className={classes.App}>
                 <h1>App 2</h1>
-                <p className={classes.join(' ')}>This is a paragraph</p>
-                <button style={style} onClick={this.togglePersonHandler} >Toggle persons</button>
-                <button style={style} onClick={() => this.switchNameHandler('MMMaamama App 2')} >Switch name</button>
+                <p className={assignedClasses.join(' ')}>This is a paragraph</p>
+                <button className={btnClasses} onClick={this.togglePersonHandler} >Toggle persons</button>
                 {persons}
             </div>
             // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))

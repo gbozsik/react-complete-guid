@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 import App2 from './App2'
 
@@ -85,7 +85,7 @@ const app = props => {
 
 
   return (
-    <div className="App">
+    <div className={classes.App}>
       <h1>App</h1>
       <button style={style} onClick={togglePersonHandler} >Toggle persons</button>
       <button style={style} onClick={() => switchNameHandler('ammamamamam')} >Switch name</button>
