@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
-import App2 from './App2'
+import Persons from '../components/persons/Persons';
+import Cockpit from '../components/cockpit/Cockpit'
 
 const app = props => {
   const [personsState, setPersonsState] = useState({
     persons: [
-      { id: 'sdlf', name: 'max', age: 23 },
-      { id: 'tfdr', name: 'name2', age: 24 },
-      { id: 'p;lk', name: 'name3', age: 34 }
+      { id: 'sdlf', name: 'App max', age: 23 },
+      { id: 'tfdr', name: 'App name2', age: 24 },
+      { id: 'p;lk', name: 'App name3', age: 34 }
     ],
   });
 
@@ -54,16 +54,12 @@ const app = props => {
     const mutatablePersonArray = [...personsState.persons]
     mutatablePersonArray[personIndex] = personForMutation;
 
-    setPersonsState({persons: mutatablePersonArray});
+    setPersonsState({ persons: mutatablePersonArray });
   }
 
   const togglePersonHandler = () => {
     const doesShow = showPersonState.showPerson;
-    if (doesShow) {
-      setShowPersonState({ showPerson: false })
-    } else {
-      setShowPersonState({ showPerson: true })
-    }
+    setShowPersonState({ showPerson: !doesShow })
   }
 
   const deletePersonhandler = (persontIndex) => {
@@ -72,37 +68,30 @@ const app = props => {
     setPersonsState({ persons: mutatablePersons });
   }
 
-
-
-  const style = {
-    backgrondColor: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  };
-
-
+  const getPersons = () => {
+    let per = null;
+    if (showPersonState.showPerson) {
+      per = (
+        <div>
+          <Persons
+            persons={personsState.persons}
+            click={deletePersonhandler}
+            changedName={nameChangeHandler} />
+        </div>
+      );
+    }
+    return per;
+  }
 
   return (
     <div className={classes.App}>
-      <h1>App</h1>
-      <button style={style} onClick={togglePersonHandler} >Toggle persons</button>
-      <button style={style} onClick={() => switchNameHandler('ammamamamam')} >Switch name</button>
-      {showPersonState.showPerson ? <div>
-        {personsState.persons.map((person, index) => {
-          return <Person
-            kex={person.id}
-            click={deletePersonhandler.bind(this, index)}
-            changedName={nameChangeHandler.bind(this, person.id)}
-            name={person.name}
-            age={person.age}
-          />
-        })
-        })
-
-        <App2 />
-      </div> : null}
+      <Cockpit
+        showPerson={showPersonState.showPerson}
+        persons={personsState.persons}
+        clickToggle={togglePersonHandler}
+        clickChange={switchNameHandler.bind(this, 'newName in App 1')}
+      />
+      {getPersons()}
     </div>
     // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
   );

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 // import './App.css';
+import App from './App'
 import classes from './App.css'
-import Person from './Person/Person';
+import Persons from '../components/persons/Persons';
+import Cockpit from '../components/cockpit/Cockpit'
 
 class App2 extends Component {
     state = {
@@ -13,7 +15,7 @@ class App2 extends Component {
         showPerson: false
     }
 
-    // nameChangeHandler = (id, event) => { //this version if you call it with arrow function
+    // nameChangeHandler = (event, id) => { //this version if you call it with arrow function
     nameChangeHandler = (id, event) => { //this version with id param first, if you call it with ".bind(this, person.id)"
         const personIndex = this.state.persons.findIndex(p => {
             return p.id === id;
@@ -26,7 +28,18 @@ class App2 extends Component {
         person.name = event.target.value;
         const mutatedPersons = [...this.state.persons];
         mutatedPersons[personIndex] = person;
-        this.setState({persons: mutatedPersons}
+        this.setState({ persons: mutatedPersons }
+        );
+    }
+
+    switchNameHandler = (newName) => {
+        this.setState({
+            persons: [
+                { name: newName, age: 23 },
+                { name: 'name2777', age: 24 },
+                { name: 'name3666', age: 64 }
+            ],
+        },
         );
     }
 
@@ -43,43 +56,33 @@ class App2 extends Component {
     }
 
     render() {
-       let btnClasses = '';
-
         let persons = null;
+        let app = null;
 
         if (this.state.showPerson) {
-            persons = (
-                <div>
-                    {this.state.persons.map((person, index) => {
-                        return <Person
-                            key={person.id}
-                            click={() => this.deletePersonHandler(index)}
-                            changedName={this.nameChangeHandler.bind(this, person.id)}
-                            // changedName={(event) => this.nameChangeHandler(event, person.id)}
-                            name={person.name}
-                            age={person.age} />
-                    })}
-                </div>
-            );
-            // btnClasses.push(classes.Red)
-            btnClasses = classes.Red;
-        }
-
-        // let classes = ['red', 'bold'].join(' ');
-        const assignedClasses = [];
-        if (this.state.persons.length <= 2) {
-            assignedClasses.push(classes.red);
-        }
-        if (this.state.persons.length <= 1) {
-            assignedClasses.push(classes.bold)
+            persons =
+                <Persons
+                    persons={this.state.persons}
+                    click={this.deletePersonHandler}
+                    changedName={this.nameChangeHandler}
+                // changedName={(event) => this.nameChangeHandler(event, person.id)}
+                />
+            app = <App />
         }
 
         return (
             <div className={classes.App}>
-                <h1>App 2</h1>
+                {/* <h1>App 2</h1>
                 <p className={assignedClasses.join(' ')}>This is a paragraph</p>
-                <button className={btnClasses} onClick={this.togglePersonHandler} >Toggle persons</button>
+                <button className={btnClasses} onClick={this.togglePersonHandler} >Toggle persons</button> */}
+                <Cockpit
+                    showPerson={this.state.showPerson}
+                    persons={this.state.persons}
+                    clickToggle={this.togglePersonHandler}
+                    clickChange={this.switchNameHandler.bind(this, 'newName in App 2')}
+                />
                 {persons}
+                {app}
             </div>
             // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
         )

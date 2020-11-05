@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+}
+
+  /* for all butto in that component which are refer to the App class */
+  /* .App button {
+    background-color: green;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    padding: 8px;
+    cursor: pointer;
+    margin: '10px'
+  } */
