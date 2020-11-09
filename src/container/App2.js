@@ -6,6 +6,7 @@ import Persons from '../components/persons/Persons'
 import Cockpit from '../components/cockpit/Cockpit'
 import withClassFunction from '../hoc/withClassFunction'
 import Aux from '../hoc/Auxiliary'
+import AuthContext from '../context/Auth-context'
 
 class App2 extends Component {
     constructor(props) {
@@ -20,7 +21,8 @@ class App2 extends Component {
         ],
         showPerson: false,
         showCockpit: true,
-        changeCounter: 0
+        changeCounter: 0,
+        authenticated: false
     }
 
     // static getDerivedStateFromProps(props, state) {
@@ -85,6 +87,10 @@ class App2 extends Component {
         this.setState({ persons: persons });
     }
 
+    authenticationHandler = () => {
+        this.setState({authenticated: true})
+    }
+
     render() {
         console.log('[App2.js] render')
         let persons = null;
@@ -99,7 +105,7 @@ class App2 extends Component {
                     changedName={this.nameChangeHandler}
                 // changedName={(event) => this.nameChangeHandler(event, person.id)}
                 />
-            app = <App title={this.props.subTitle} />
+            app = <App  />
         }
         if (this.state.showCockpit) {
             cockPit = <Cockpit
@@ -118,9 +124,11 @@ class App2 extends Component {
                     this.setState({ showCockpit: !doesShowCocpit })
                 }
                 }>Remove Cockpit</button>
+                <AuthContext.Provider value={{authenticated: this.state.authenticated, login: this.authenticationHandler}}>
                 {cockPit}
                 {persons}
                 {app}
+                </AuthContext.Provider>
             </Aux>
             // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
         )

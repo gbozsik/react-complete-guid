@@ -76,12 +76,6 @@ const app = props => {
     return per;
   }
 
-  const getPersons2 = () => {
-    if (showPersonState.showPerson) {
-    return personComponentsState.personsComponents;
-    } 
-  }
-
   return (
     <div className={classes.App}>
       <Cockpit
@@ -91,7 +85,7 @@ const app = props => {
         clickToggle={togglePersonHandler}
         clickChange={switchNameHandler}
       />
-      {getPersons2()}
+      {getPersons()}
     </div>
     // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
   );

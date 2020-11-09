@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react'
+import AuthContext from '../../context/Auth-context'
 
 import classes from './Cockpit.css'
 
@@ -52,6 +53,12 @@ const cockpit = (props) => {
             <button
                 className={assignedClasses.join(' ')}
                 onClick={props.clickChange} >Switch name</button>
+            <AuthContext.Consumer>
+                {(context) =>
+                    <button
+                        className={assignedClasses.join(' ')}
+                        onClick={context.login}>Login</button>}
+            </AuthContext.Consumer>
         </div>
     );
 }
