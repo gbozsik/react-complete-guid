@@ -1,16 +1,19 @@
-import React, { useEffect, memo } from 'react'
+import React, { useEffect, useRef } from 'react'
 
 import classes from './Cockpit.css'
 
 const cockpit = (props) => {
+    const toggleBtnRef = useRef(null);
+
     useEffect(() => {
         console.log('[Cockpit.js] useEffect')
         //http request..
-        const timer = setTimeout(() => {
-            console.log('Saved data to db.')
-        }, 1000);
+        // const timer = setTimeout(() => {
+        //     console.log('Saved data to db.')
+        // }, 1000);
+        toggleBtnRef.current.click();
         return () => {
-            clearTimeout(timer);
+            // clearTimeout(timer);
             console.log('[Cockpit.js] Clean up work in useEffect ')
         }
     }, []);
@@ -43,11 +46,12 @@ const cockpit = (props) => {
             <h1>{props.title}</h1>
             <p className={assignedClasses.join(' ')}>This is a paragraph</p>
             <button
+                ref={toggleBtnRef}
                 className={btnClasses}
                 onClick={props.clickToggle} >Toggle persons</button>
-            <button 
-            className={assignedClasses.join(' ')}
-            onClick={props.clickChange} >Switch name</button>
+            <button
+                className={assignedClasses.join(' ')}
+                onClick={props.clickChange} >Switch name</button>
         </div>
     );
 }

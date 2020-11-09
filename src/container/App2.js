@@ -57,7 +57,7 @@ class App2 extends Component {
         this.setState((prevState, props) => {
             return {
                 persons: mutatedPersons,
-                changeCounter: prevState.changeCounter + 1
+                changeCounter: prevState.changeCounter + 1      //and DON`T DO THIS: this.state.changeCounter + 1, couse not guaranteed, you`ll set the actual state
             }
         });
     }
