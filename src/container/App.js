@@ -12,35 +12,18 @@ const app = props => {
     ],
   });
 
-  const [otherState, setOtherState] = useState({
-    otherStates: [
-      { title: 'some other value' },
-      { title: 'some other value 2' }
-    ]
-  });
-
   const [showPersonState, setShowPersonState] = useState({
     showPerson: false
-  })
+  });
 
-  const switchOtherStateHandler = () => {
-    setOtherState({
-      otherStates: [
-        { title: 'other state changed' },
-        { title: 'some other value 2 changed' }
-      ]
-    });
-  }
-
-  const switchNameHandler = (newName) => {
+  const switchNameHandler = () => {
     setPersonsState({
       persons: [
-        { name: newName, age: 23 },
-        { name: 'name2777', age: 24 },
-        { name: 'name3666', age: 64 }
+        { id: 'idlkj', name: ' new name in App', age: 23 },
+        { id: 'idsd', name: 'name2777', age: 24 },
+        { id: 'idgb', name: 'name3666', age: 64 }
       ],
     },
-      switchOtherStateHandler()
     );
   }
 
@@ -68,6 +51,16 @@ const app = props => {
     setPersonsState({ persons: mutatablePersons });
   }
 
+  const [personComponentsState, setPersonComponentsState] = useState({
+    personsComponents:
+      <div>
+        <Persons
+          persons={personsState.persons}
+          click={deletePersonhandler}
+          changedName={nameChangeHandler} />
+      </div>
+  })
+
   const getPersons = () => {
     let per = null;
     if (showPersonState.showPerson) {
@@ -83,18 +76,25 @@ const app = props => {
     return per;
   }
 
+  const getPersons2 = () => {
+    if (showPersonState.showPerson) {
+    return personComponentsState.personsComponents;
+    } 
+  }
+
   return (
     <div className={classes.App}>
       <Cockpit
+        title={props.title}
         showPerson={showPersonState.showPerson}
-        persons={personsState.persons}
+        personsLength={personsState.persons.length}
         clickToggle={togglePersonHandler}
-        clickChange={switchNameHandler.bind(this, 'newName in App 1')}
+        clickChange={switchNameHandler}
       />
-      {getPersons()}
+      {getPersons2()}
     </div>
     // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
   );
 }
 
-export default app;
+export default React.memo(app);

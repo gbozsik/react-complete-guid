@@ -2,17 +2,43 @@ import React, { Component } from 'react';
 // import './App.css';
 import App from './App'
 import classes from './App.css'
-import Persons from '../components/persons/Persons';
+import Persons from '../components/persons/Persons'
 import Cockpit from '../components/cockpit/Cockpit'
+import withClassFunction from '../hoc/withClassFunction'
+import Aux from '../hoc/Auxiliary'
 
 class App2 extends Component {
+    constructor(props) {
+        super(props)
+        console.log('[App2.js] constructor')
+    }
     state = {
         persons: [
             { id: 'sgs', name: 'max', age: 23 },
             { id: 'ytdkjg', name: 'name2', age: 24 },
             { id: '4ert', name: 'name3', age: 34 }
         ],
-        showPerson: false
+        showPerson: false,
+        showCockpit: true,
+        changeCounter: 0
+    }
+
+    // static getDerivedStateFromProps(props, state) {
+    //     console.log('[App2.js] getDerivedStateFromProps', props)
+    //     return state;
+    // }
+
+    componentDidMount() {
+        console.log('[App.js] componentDidMount')
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('[App2.js] shoudComponentUpdate');
+        return true;
+    }
+
+    componentDidUpdate() {
+        console.log('[App2.js] componentDidUpdate');
     }
 
     // nameChangeHandler = (event, id) => { //this version if you call it with arrow function
@@ -28,16 +54,20 @@ class App2 extends Component {
         person.name = event.target.value;
         const mutatedPersons = [...this.state.persons];
         mutatedPersons[personIndex] = person;
-        this.setState({ persons: mutatedPersons }
-        );
+        this.setState((prevState, props) => {
+            return {
+                persons: mutatedPersons,
+                changeCounter: prevState.changeCounter + 1
+            }
+        });
     }
 
-    switchNameHandler = (newName) => {
+    switchNameHandler = () => {
         this.setState({
             persons: [
-                { name: newName, age: 23 },
-                { name: 'name2777', age: 24 },
-                { name: 'name3666', age: 64 }
+                { id: 'iddfg', name: 'new name in App2', age: 23 },
+                { id: 'idrth', name: 'name2777', age: 24 },
+                { id: 'idtsrht', name: 'name3666', age: 64 }
             ],
         },
         );
@@ -56,7 +86,9 @@ class App2 extends Component {
     }
 
     render() {
+        console.log('[App2.js] render')
         let persons = null;
+        let cockPit = null;
         let app = null;
 
         if (this.state.showPerson) {
@@ -67,26 +99,32 @@ class App2 extends Component {
                     changedName={this.nameChangeHandler}
                 // changedName={(event) => this.nameChangeHandler(event, person.id)}
                 />
-            app = <App />
+            app = <App title={this.props.subTitle} />
+        }
+        if (this.state.showCockpit) {
+            cockPit = <Cockpit
+                title={this.props.appTitle}
+                showPerson={this.state.showPerson}
+                personsLength={this.state.persons.length}
+                clickToggle={this.togglePersonHandler}
+                clickChange={this.switchNameHandler}
+            />
         }
 
         return (
-            <div className={classes.App}>
-                {/* <h1>App 2</h1>
-                <p className={assignedClasses.join(' ')}>This is a paragraph</p>
-                <button className={btnClasses} onClick={this.togglePersonHandler} >Toggle persons</button> */}
-                <Cockpit
-                    showPerson={this.state.showPerson}
-                    persons={this.state.persons}
-                    clickToggle={this.togglePersonHandler}
-                    clickChange={this.switchNameHandler.bind(this, 'newName in App 2')}
-                />
+            <Aux classes={classes.App}>
+                <button onClick={() => {
+                    const doesShowCocpit = this.state.showCockpit;
+                    this.setState({ showCockpit: !doesShowCocpit })
+                }
+                }>Remove Cockpit</button>
+                {cockPit}
                 {persons}
                 {app}
-            </div>
+            </Aux>
             // React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Hi i\'am a react app'))
         )
     }
 }
 
-export default App2;
+export default withClassFunction(App2, classes.App);
