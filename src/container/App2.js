@@ -105,7 +105,7 @@ class App2 extends Component {
                     changedName={this.nameChangeHandler}
                 // changedName={(event) => this.nameChangeHandler(event, person.id)}
                 />
-            app = <App  />
+            app = <App title={this.props.subTitle} />
         }
         if (this.state.showCockpit) {
             cockPit = <Cockpit

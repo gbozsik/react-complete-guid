@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ErrorBoundary from '../../../ErrorBoundary/ErrorBoundary'
 import WithClass from '../../../hoc/WithClass';
 import PropTypes from 'prop-types'
-import AuthContect from '../../../context/Auth-context'
+import AuthContext from '../../../context/Auth-context'
 
 import classes from './Person.css';
 
@@ -12,9 +12,12 @@ class Person extends Component {
         this.inputElementRef = React.createRef();
     }
 
+    static contextType = AuthContext
+
     componentDidMount() {
         // this.inputElement.focus();
         this.inputElementRef.current.focus();
+        console.log('Authinticated: ', this.context.authenticated)
     }
 
     render() {
@@ -24,13 +27,11 @@ class Person extends Component {
         //     throw new Error('somthing went wrong');
         // }
 
-
         console.log('[Person.js] renderin...');
         return (
             <WithClass classes={classes.Person}>
                 <ErrorBoundary key={this.props.id}>
-                    <AuthContect.Consumer >{(context) => context.authenticated ? <p>Authenticated</p> : <p>Please login</p>}
-                    </AuthContect.Consumer>
+                   {this.context.authenticated ? <p>Authenticated</p> : <p>Please login</p>}
                     <p onClick={this.props.click} key='id1'>I am {this.props.name} and I am {this.props.age} years old</p>
                     <p key='id2'>{this.props.children}</p>
                     <input
